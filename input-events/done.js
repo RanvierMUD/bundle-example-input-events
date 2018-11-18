@@ -12,7 +12,7 @@ module.exports = {
     player.hydrate(state);
 
     // Allow the player class to modify the player (adding attributes, changing default prompt, etc)
-    player.playerClass.setupPlayer(player);
+    player.playerClass.setupPlayer(state, player);
 
     player.save();
 
