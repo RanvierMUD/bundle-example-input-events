@@ -28,7 +28,7 @@ module.exports = {
             confirmation = confirmation.toString().trim().toLowerCase();
 
             if (!/[yn]/.test(confirmation)) {
-              say('<b>Invalid Option</b>')
+              say('<b>Invalid Option</b>');
               return socket.emit('choose-character', socket, args);
             }
 

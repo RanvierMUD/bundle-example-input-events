@@ -100,7 +100,7 @@ module.exports = {
         try {
           player.save(() => {
             Broadcast.sayAt(player, reason);
-            player.socket.on('close', resolve)
+            player.socket.on('close', resolve);
             const closeSocket = true;
             state.PlayerManager.removePlayer(player, closeSocket);
             Logger.warn(`Booted ${player.name}: ${reason}`);
@@ -125,14 +125,14 @@ module.exports = {
     options.push({
       display: 'Delete This Account',
       onSelect: () => {
-        say('<bold>By deleting this account, all the characters will be also deleted.</bold>')
+        say('<bold>By deleting this account, all the characters will be also deleted.</bold>');
         write(`<bold>Are you sure you want to delete this account? </bold> <cyan>[Y/n]</cyan> `);
           socket.once('data', confirmation => {
             say('');
             confirmation = confirmation.toString().trim().toLowerCase();
 
             if (!/[yn]/.test(confirmation)) {
-              say('<b>Invalid Option</b>')
+              say('<b>Invalid Option</b>');
               return socket.emit('choose-character', socket, args);
             }
 
