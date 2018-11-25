@@ -1,6 +1,6 @@
 'use strict';
 
-const { EventUtil, Player } = require('ranvier');
+const { Player } = require('ranvier');
 
 /**
  * Finish player creation. Add the character to the account then add the player
