@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Config, EventUtil } = require('ranvier');
+const { Broadcast, EventUtil } = require('ranvier');
 
 /**
  * Player class selection event
