@@ -1,13 +1,15 @@
 'use strict';
 
-const { Data, EventUtil } = require('ranvier');
+const fs = require('fs');
+
+const { EventUtil } = require('ranvier');
 
 /**
  * MOTD event
  */
 module.exports = {
   event: state => socket => {
-    const motd = Data.loadMotd();
+    const motd = fs.readFileSync(__dirname + '/../resources/motd').toString('utf8');
     if (motd) {
       EventUtil.genSay(socket)(motd);
     }

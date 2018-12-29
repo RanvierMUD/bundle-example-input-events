@@ -1,6 +1,6 @@
 'use strict';
 
-const { Data, Logger } = require('ranvier');
+const { Logger } = require('ranvier');
 const CommonFunctions = require('../lib/CommonFunctions');
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
       socket.write('Welcome, what is your name? ');
     }
 
-    socket.once('data', name => {
+    socket.once('data', async name => {
       name = name.toString().trim();
 
       const invalid = CommonFunctions.validateName(name);
@@ -20,15 +20,17 @@ module.exports = {
 
       name = name[0].toUpperCase() + name.slice(1);
 
-      let account = Data.exists('account', name);
+      let account = null;
+      try {
+        account = await state.AccountManager.loadAccount(name);
+      } catch (e) {
+        Logger.error(e.message);
+      }
 
-      // That player account doesn't exist so ask if them to create it
       if (!account) {
         Logger.error(`No account found as ${name}.`);
         return socket.emit('create-account', socket, name);
       }
-
-      account = state.AccountManager.loadAccount(name);
 
       if (account.banned) {
         socket.write('This account has been banned.\r\n');

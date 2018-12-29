@@ -53,7 +53,7 @@ module.exports = {
       characters.forEach(char => {
         options.push({
           display: char.username,
-          onSelect: () => {
+          onSelect: async () => {
             let currentPlayer = pm.getPlayer(char.username);
             let existed = false;
             if (currentPlayer) {
@@ -70,7 +70,7 @@ module.exports = {
               return;
             }
 
-            currentPlayer = state.PlayerManager.loadPlayer(state, account, char.username);
+            currentPlayer = await state.PlayerManager.loadPlayer(state, account, char.username);
             currentPlayer.socket = socket;
             socket.emit('done', socket, { player: currentPlayer });
           },

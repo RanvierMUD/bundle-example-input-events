@@ -7,7 +7,7 @@ const { Player } = require('ranvier');
  * to the game world
  */
 module.exports = {
-  event: state => (socket, args) => {
+  event: state => async (socket, args) => {
     let player = new Player({
       name: args.name,
       account: args.account,
@@ -39,7 +39,7 @@ module.exports = {
     player.save();
 
     // reload from manager so events are set
-    player = state.PlayerManager.loadPlayer(state, player.account, player.name);
+    player = await state.PlayerManager.loadPlayer(state, player.account, player.name);
     player.socket = socket;
 
     socket.emit('done', socket, { player });
