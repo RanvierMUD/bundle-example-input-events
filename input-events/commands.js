@@ -1,8 +1,8 @@
 'use strict';
 
 const Ranvier = require('ranvier');
-const { Broadcast, CommandType, Logger, PlayerRoles } = Ranvier;
-const { CommandParser, InvalidCommandError, RestrictedCommandError } = Ranvier.CommandParser;
+const { Broadcast: B, CommandType, Logger, PlayerRoles } = Ranvier;
+const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('../../bundle-example-lib/lib/CommandParser');
 
 /**
  * Main command loop. All player input after login goes through here.
@@ -28,6 +28,11 @@ module.exports = {
           throw null;
         }
         switch (result.type) {
+          case CommandType.MOVEMENT: {
+            player.emit('move', result);
+            break;
+          }
+
           case CommandType.COMMAND: {
             const { requiredRole = PlayerRoles.PLAYER } = result.command;
             if (requiredRole > player.role) {
@@ -37,6 +42,7 @@ module.exports = {
             result.command.execute(result.args, player, result.originalCommand);
             break;
           }
+
           case CommandType.CHANNEL: {
             if (result.channel.minRequiredRole !== null && result.channel.minRequiredRole > player.role) {
               throw new RestrictedCommandError();
@@ -45,6 +51,7 @@ module.exports = {
             result.channel.send(state, player, result.args);
             break;
           }
+
           case CommandType.SKILL: {
             // See bundles/ranvier-player-events/player-events.js commandQueued and updateTick for when these
             // actually get executed
@@ -66,19 +73,19 @@ module.exports = {
             if (roomCommands && roomCommands.includes(commandName)) {
               player.room.emit('command', player, commandName, args.join(' '));
             } else {
-              Broadcast.sayAt(player, "Huh?");
+              B.sayAt(player, "Huh?");
               Logger.warn(`WARNING: Player tried non-existent command '${data}'`);
             }
             break;
           case error instanceof RestrictedCommandError:
-            Broadcast.sayAt(player, "You can't do that.");
+            B.sayAt(player, "You can't do that.");
             break;
           default:
             Logger.error(error);
         }
       }
 
-      Broadcast.prompt(player);
+      B.prompt(player);
       loop();
     });
   }
