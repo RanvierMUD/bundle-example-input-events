@@ -1,7 +1,6 @@
 'use strict';
 
-const Ranvier = require('ranvier');
-const { Broadcast: B, CommandType, Logger, PlayerRoles } = Ranvier;
+const { Broadcast: B, CommandType, Logger, PlayerRoles } = require('ranvier');
 const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('../../bundle-example-lib/lib/CommandParser');
 
 /**
