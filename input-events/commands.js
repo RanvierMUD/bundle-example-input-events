@@ -1,6 +1,7 @@
 'use strict';
 
 const { Broadcast: B, CommandType, Logger, PlayerRoles } = require('ranvier');
+const { NoPartyError, NoRecipientError, NoMessageError } = require('ranvier').Channel;
 const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('@bundles/bundle-example-lib/lib/CommandParser');
 
 /**
@@ -43,11 +44,30 @@ module.exports = {
           }
 
           case CommandType.CHANNEL: {
-            if (result.channel.minRequiredRole !== null && result.channel.minRequiredRole > player.role) {
+            const { channel } = result;
+            if (channel.minRequiredRole !== null && channel.minRequiredRole > player.role) {
               throw new RestrictedCommandError();
             }
             // same with channels
-            result.channel.send(state, player, result.args);
+            try {
+              channel.send(state, player, result.args);
+            } catch (error) {
+              switch (true) {
+                case error instanceof NoPartyError:
+                  B.sayAt(player, "You aren't in a group.");
+                  break;
+                case error instanceof NoRecipientError:
+                  B.sayAt(player, "Send the message to whom?");
+                  break;
+                case error instanceof NoMessageError:
+                  B.sayAt(player, `\r\nChannel: ${channel.name}`);
+                  B.sayAt(player, 'Syntax: ' + channel.getUsage());
+                  if (channel.description) {
+                    B.sayAt(player, channel.description);
+                  }
+                  break;
+              }
+            }
             break;
           }
 
