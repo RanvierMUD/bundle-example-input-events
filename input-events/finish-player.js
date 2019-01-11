@@ -40,7 +40,7 @@ module.exports = {
 
       player.setMeta('class', args.playerClass);
 
-      const room = state.RoomManager.get(startingRoomRef);
+      const room = state.RoomManager.getRoom(startingRoomRef);
       player.room = room;
       player.save();
 
