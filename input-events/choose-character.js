@@ -26,7 +26,6 @@ module.exports = {
     const characters = account.characters.filter(currChar => currChar.deleted === false);
     const maxCharacters   = Config.get("maxCharacters");
     const canAddCharacter = characters.length < maxCharacters;
-    const canMultiplay    = Config.get("allowMultiplay");
 
     let options = [];
 
@@ -42,7 +41,6 @@ module.exports = {
       options.push({
         display: 'Create New Character',
         onSelect: () => {
-          handleMultiplaying();
           socket.emit('create-player', socket, { account });
         },
       });
