@@ -42,7 +42,7 @@ module.exports = {
 
       const room = state.RoomManager.getRoom(startingRoomRef);
       player.room = room;
-      player.save();
+      await state.PlayerManager.save(player);
 
       // reload from manager so events are set
       player = await state.PlayerManager.loadPlayer(state, player.account, player.name);
