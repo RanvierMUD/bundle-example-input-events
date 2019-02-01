@@ -1,6 +1,7 @@
 'use strict';
 
 const { Broadcast, Logger } = require('ranvier');
+const PlayerClass = require('@bundles/bundle-example-classes/lib/PlayerClass');
 
 
 /**
@@ -10,6 +11,8 @@ module.exports = {
   event: state => (socket, args) => {
     let player = args.player;
     player.hydrate(state);
+
+    player.playerClass = PlayerClass.get(player.getMeta('class'));
 
     // Allow the player class to modify the player (adding attributes, changing default prompt, etc)
     player.playerClass.setupPlayer(state, player);

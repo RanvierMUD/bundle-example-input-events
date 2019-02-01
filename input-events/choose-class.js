@@ -1,6 +1,7 @@
 'use strict';
 
 const { Broadcast, EventUtil } = require('ranvier');
+const PlayerClass = require('@bundles/bundle-example-classes/lib/PlayerClass');
 
 /**
  * Player class selection event
@@ -17,7 +18,8 @@ module.exports = {
     */
     say('  Pick your class');
     say(' --------------------------');
-    const classes = [...state.ClassManager].map(([id, instance]) => {
+    let classes = PlayerClass.getClasses();
+    classes = Object.entries(classes).map(([id, instance]) => {
       return [id, instance.config];
     });
     for (const [ id, config ] of classes) {
