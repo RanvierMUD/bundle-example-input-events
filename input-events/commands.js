@@ -2,7 +2,7 @@
 
 const { Broadcast: B, CommandType, Logger, PlayerRoles } = require('ranvier');
 const { NoPartyError, NoRecipientError, NoMessageError } = require('ranvier').Channel;
-const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('@bundles/bundle-example-lib/lib/CommandParser');
+const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('../../bundle-example-lib/lib/CommandParser');
 
 /**
  * Main command loop. All player input after login goes through here.

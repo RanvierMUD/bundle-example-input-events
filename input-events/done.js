@@ -1,7 +1,7 @@
 'use strict';
 
 const { Broadcast, Logger } = require('ranvier');
-const PlayerClass = require('@bundles/bundle-example-classes/lib/PlayerClass');
+const PlayerClass = require('../../bundle-example-classes/lib/PlayerClass');
 
 
 /**

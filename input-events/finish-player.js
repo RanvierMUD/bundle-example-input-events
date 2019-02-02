@@ -1,7 +1,7 @@
 'use strict';
 
 const { Config, Player } = require('ranvier');
-const PlayerClass = require('@bundles/bundle-example-classes/lib/PlayerClass');
+const PlayerClass = require('../../bundle-example-classes/lib/PlayerClass');
 
 /**
  * Finish player creation. Add the character to the account then add the player
