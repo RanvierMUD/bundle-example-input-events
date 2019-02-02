@@ -87,7 +87,7 @@ module.exports = {
         switch(true) {
           case error instanceof InvalidCommandError:
             // check to see if room has a matching context-specific command
-            const roomCommands = player.room.getBehavior('commands');
+            const roomCommands = player.room.getMeta('commands');
             const [commandName, ...args] = data.split(' ');
             if (roomCommands && roomCommands.includes(commandName)) {
               player.room.emit('command', player, commandName, args.join(' '));
