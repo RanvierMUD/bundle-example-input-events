@@ -6,13 +6,13 @@ Login event flow
                    /         \
      create-account           password----------------------
         |                            |                     |
-  change-password              choose-character      change-password
+    change-password              choose-character      change-password
         |                            |
-  create-player                      |
+    create-player                    |
         |                            |
-  player-name-check                  |
+    player-name-check                |
         |                            |
-  finish-player                      |
+    finish-player                    |
         |__________________________done (add player to game world)
                                      |
                                    commands
