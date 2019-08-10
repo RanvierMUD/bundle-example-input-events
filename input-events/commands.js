@@ -23,8 +23,10 @@ module.exports = {
       player._lastCommandTime = Date.now();
 
       try {
+        // allow for modal commands, _commandState is set below when command.execute() returns a value
         if (player._commandState) {
           const { state: commandState, command } = player._commandState;
+          // note this calls command.func(), not command.execute()
           const newState = command.func(data, player, command.name, commandState);
           if (newState) {
             player._commandState.state = newState;
