@@ -24,8 +24,8 @@ module.exports = {
 
       try {
         if (player._commandState) {
-          const { state, command } = player._commandState;
-          const newState = command.execute(data, player, command.name, state);
+          const { state: commandState, command } = player._commandState;
+          const newState = command.func(data, player, command.name, commandState);
           if (newState) {
             player._commandState.state = newState;
           } else {
