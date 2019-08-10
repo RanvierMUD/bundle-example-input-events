@@ -23,6 +23,20 @@ module.exports = {
       player._lastCommandTime = Date.now();
 
       try {
+        if (player._commandState) {
+          const { state, command } = player._commandState;
+          const newState = command.execute(data, player, command.name, state);
+          if (newState) {
+            player._commandState.state = newState;
+          } else {
+            player._commandState = null;
+            B.prompt(player);
+          }
+
+          loop();
+          return;
+        }
+
         const result = CommandParser.parse(state, data, player);
         if (!result) {
           throw null;
@@ -39,7 +53,19 @@ module.exports = {
               throw new RestrictedCommandError();
             }
             // commands have no lag and are not queued, just immediately execute them
-            result.command.execute(result.args, player, result.originalCommand);
+            const state = result.command.execute(result.args, player, result.originalCommand);
+            if (state) {
+              player._commandState = {
+                command: result.command,
+                state,
+              };
+
+              // bypasses prompt
+              loop();
+              return;
+            }
+
+            player._commandState = null;
             break;
           }
 
